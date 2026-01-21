@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mommies Bakery - Premium Cupcakes ₹40-₹50 | Majuli</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); }
+        
+        .header { background: linear-gradient(135deg, #ff6b9d, #ff8e8e); color: white; padding: 1.5rem 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(255,107,157,0.4); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 2.2rem; font-weight: 800; }
+        .cart { display: flex; gap: 1rem; align-items: center; cursor: pointer; font-size: 1.5rem; }
+        .cart-count { background: #ff4757; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: bold; }
+        
+        nav { background: white; padding: 1rem 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav ul { list-style: none; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        nav a { color: #333; text-decoration: none; font-weight: 600; padding: 0.5rem 1rem; border-radius: 25px; transition: all 0.3s; }
+        nav a:hover { background: #ff6b9d; color: white; }
+        
+        .hero { background: linear-gradient(rgba(255,107,157,0.95), rgba(255,142,142,0.95)); padding: 6rem 0; text-align: center; color: white; }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; font-weight: 800; }
+        .hero p { font-size: 1.5rem; max-width: 700px; margin: 0 auto 2rem; }
+        
+        .section { padding: 4rem 0; }
+        .section-title { text-align: center; font-size: 3rem; color: #d32f2f; margin-bottom: 2rem; font-weight: 800; }
+        
+        .cupcakes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .cupcake-card { background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.1); transition: all 0.4s; }
+        .cupcake-card:hover { transform: translateY(-15px); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        .cupcake-image { width: 100%; height: 250px; object-fit: cover; }
+        .cupcake-info { padding: 1.5rem; text-align: center; }
+        .cupcake-name { font-size: 1.4rem; font-weight: 700; color: #d32f2f; margin-bottom: 0.5rem; }
+        .price-tag { background: linear-gradient(135deg, #4caf50, #81c784); color: white; padding: 0.8rem 1.5rem; border-radius: 25px; font-size: 1.5rem; font-weight: 800; display: inline-block; margin: 0.5rem 0; }
+        .add-cart { width: 100%; background: linear-gradient(135deg, #ff6b9d, #ff8e8e); color: white; border: none; padding: 1rem; border-radius: 20px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 1rem; }
+        .add-cart:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(255,107,157,0.4); }
+        
+        .cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; }
+        .cart-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 25px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #eee; }
+        .checkout-btn { background: linear-gradient(135deg, #4caf50, #81c784); color: white; border: none; padding: 1.2rem; border-radius: 20px; font-size: 1.2rem; width: 100%; cursor: pointer; margin-top: 1rem; }
+        
+        footer { background: linear-gradient(135deg, #d32f2f, #f44336); color: white; padding: 3rem 0 1rem; text-align: center; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        
+        @media (max-width: 768px) { .hero h1 { font-size: 2.8rem; } .cupcakes-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🧁 Mommies Bakery</div>
+                <div class="cart" onclick="toggleCart()">
+                    <span>🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#cupcakes">Cupcakes</a></li>
+                <li><a href="#cart">Cart</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Premium Cupcakes Only</h1>
+            <p>Freshly baked daily in Majuli | ₹40-₹50 each | Same day delivery</p>
+        </div>
+    </section>
+
+    <section id="cupcakes" class="section">
+        <div class="container">
+            <h2 class="section-title">Cupcake Varieties</h2>
+            <div class="cupcakes-grid" id="cupcakesGrid">
+                <!-- Dynamic cupcakes -->
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <h3>🛒 Your Cupcakes (<span id="cartTotalItems">0</span>)</h3>
+            <div id="cartItems"></div>
+            <div id="emptyCart" style="display: none; text-align: center; padding: 2rem; color: #666;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🛒</div>
+                <p>No cupcakes selected</p>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" style="display: none;" onclick="checkout()">
+                ₹<span id="totalAmount">0</span> - Order via WhatsApp
+            </button>
+            <button onclick="closeCart()" style="background: #ff6b9d; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 20px; cursor: pointer; margin-top: 1rem;">Close</button>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>🧁 Mommies Bakery</h3>
+                    <p>Majuli, Assam | FSSAI Licensed</p>
+                </div>
+                <div>
+                    <h3>📱 WhatsApp Orders</h3>
+                    <p>+91-9678234567</p>
+                </div>
+                <div>
+                    <h3>🚚 Delivery</h3>
+                    <p>FREE Majuli | ₹30 Assam</p>
+                    <p>Same Day Service</p>
+                </div>
+            </div>
+            <p>© 2026 Mommies Bakery | Fresh Daily</p>
+        </div>
+    </footer>
+
+    <script>
+        // CUPCAKES USING YOUR PHOTOS [file:180][file:181]
+        const cupcakes = [
+            { id: 1, name: 'Rainbow Sprinkles', price: 40, img: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAJYA+gDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6l5rW29jZ3SDhIWGh
